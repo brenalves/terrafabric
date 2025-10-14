@@ -25,6 +25,8 @@ Application::Application()
     _player->getTransform().position = glm::vec3(0.0f, 0.0f, 3.0f);
     _player->getTransform().rotation = glm::vec3(0.0f, -90.0f, 0.0f);
 
+    _world = new World();
+
     _quad = new Quad();
     _quad->getTransform().position = glm::vec3(0.0f, 0.0f, -3.0f);
 }
@@ -32,7 +34,10 @@ Application::Application()
 Application::~Application()
 {
     delete _quad;
+    delete _world;
     delete _player;
+
+    ResourceManager::shutdown();
 
     delete _timer;
     delete _input;
@@ -54,7 +59,31 @@ void Application::run()
         if(_input->isKeyPressed(GLFW_KEY_ESCAPE))
             onCloseCallback();
 
+        if(_input->isKeyPressed(GLFW_KEY_F1))
+        {
+            if(_input->getCursorMode() == NORMAL)
+                _input->setCursorMode(DISABLED);
+            else
+                _input->setCursorMode(NORMAL);
+        }
+
+        if(_input->isKeyPressed(GLFW_KEY_F2))
+        {
+            if(_renderer->getDrawMode() == DrawMode::FILL)
+                _renderer->setDrawMode(DrawMode::LINE);
+            else if(_renderer->getDrawMode() == DrawMode::LINE)
+                _renderer->setDrawMode(DrawMode::POINT);
+            else
+                _renderer->setDrawMode(DrawMode::FILL);
+        }
+
+        if(_input->isKeyPressed(GLFW_KEY_F11))
+        {
+            // _window->setFullscreen(!_window->isFullscreen());
+        }
+
         _player->update();
+        _world->update();
         _quad->update();
 
         _renderer->clear();
@@ -62,6 +91,9 @@ void Application::run()
         // render here
         _renderer->beginFrame(_player->getTransform(), _player->getCamera());
         _renderer->drawQuad(_quad->getTransform(), _quad->getMesh());
+        
+        Chunk* chunk = _world->getChunk();
+        _renderer->drawChunk(chunk->getPosition(), chunk->getMesh());
 
         _window->swapBuffers();
     }
@@ -77,4 +109,5 @@ void Application::onResizeCallback(int width, int height)
 {
     std::cout << "Window resized to " << width << "x" << height << std::endl;
     _renderer->onResize(width, height);
+    _player->onResize(width, height);
 }

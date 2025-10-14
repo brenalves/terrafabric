@@ -11,6 +11,13 @@
 #include "components/mesh.h"
 #include "core/resourcemanager.h"
 
+enum class DrawMode
+{
+    FILL = GL_FILL,
+    LINE = GL_LINE,
+    POINT = GL_POINT
+};
+
 class Renderer
 {
 public:
@@ -20,12 +27,19 @@ public:
     void clear();
     void beginFrame(Transform& cameraTransform, Camera& camera);
     void drawQuad(Transform& transform, Mesh* mesh);
+    void drawChunk(glm::vec3 position, Mesh* mesh);
+
+    void setDrawMode(DrawMode mode);
 
     void onResize(int width, int height);
+
+    inline DrawMode getDrawMode() const { return _drawMode; }
 
     inline static Renderer* getInstance() { return _instance; }
 
 private:
+    DrawMode _drawMode;
+
     UniformBuffer* _uniformBuffer;
 
     static Renderer* _instance;

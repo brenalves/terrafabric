@@ -12,6 +12,8 @@ public:
 
     void update();
 
+    void onResize(int width, int height);
+
     inline Transform& getTransform() { return _transform; }
     inline Camera& getCamera() { return _camera; }
 
@@ -20,4 +22,8 @@ private:
     Camera _camera;
 
     float _speed;
+    float _sensitivity;
+    float lastX;
+    float lastY;
+    bool firstMouse = true;
 };

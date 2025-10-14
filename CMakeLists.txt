@@ -21,6 +21,7 @@ add_executable(terrafabric
     src/rendering/bufferlayout.h
     src/rendering/buffer.h
     src/rendering/vertexarray.h src/rendering/vertexarray.cpp
+    src/rendering/texture.h src/rendering/texture.cpp
 
     src/components/transform.h
     src/components/camera.h
@@ -28,8 +29,11 @@ add_executable(terrafabric
 
     src/game/player.h src/game/player.cpp
     src/game/quad.h src/game/quad.cpp
+    src/game/world.h src/game/world.cpp
+    src/game/chunk.h src/game/chunk.cpp
 
     external/glad/src/glad.c
+    external/stb_image/src/stb_image.cpp
 )
 
 target_link_libraries(terrafabric PRIVATE
@@ -42,6 +46,7 @@ target_include_directories(terrafabric PRIVATE
     external/glfw/include
     external/glad/include
     external/glm
+    external/stb_image/include
 )
 
 if(WIN32)

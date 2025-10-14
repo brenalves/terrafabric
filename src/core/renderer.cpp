@@ -21,6 +21,17 @@ Renderer::Renderer()
     _uniformBuffer = new UniformBuffer(2 * sizeof(glm::mat4), 0);
 
     ResourceManager::loadShader("quad", "assets/shaders/quad.vert", "assets/shaders/quad.frag");
+    ResourceManager::loadShader("chunk", "assets/shaders/chunk.vert", "assets/shaders/chunk.frag");
+
+    Texture2D* atlas = ResourceManager::loadTexture("atlas");
+    atlas->loadFromFile("assets/textures/atlas.png");
+
+    Texture2D* crosshair = ResourceManager::loadTexture("crosshair");
+    crosshair->loadFromFile("assets/textures/crosshair.png");
+
+    _drawMode = DrawMode::FILL;
+
+    glEnable(GL_DEPTH_TEST);
 }
 
 Renderer::~Renderer()
@@ -58,6 +69,32 @@ void Renderer::drawQuad(Transform &transform, Mesh* mesh)
     mesh->EBO.bind();
 
     glDrawElements(GL_TRIANGLES, mesh->EBO.getCount(), GL_UNSIGNED_INT, 0);
+}
+
+void Renderer::drawChunk(glm::vec3 position, Mesh *mesh)
+{
+    Shader* shader = ResourceManager::getShader("chunk");
+
+    shader->bind();
+
+    Texture2D* atlas = ResourceManager::getTexture("atlas");
+    atlas->bind(0);
+    shader->setUniform1i("u_Texture", 0); // Texture unit 0
+
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
+    shader->setUniformMatrix4fv("u_Model", glm::value_ptr(model));
+
+    mesh->VAO.bind();
+    mesh->VBO.bind();
+    mesh->EBO.bind();
+
+    glDrawElements(GL_TRIANGLES, mesh->EBO.getCount(), GL_UNSIGNED_INT, 0);
+}
+
+void Renderer::setDrawMode(DrawMode mode)
+{
+    _drawMode = mode;
+    glPolygonMode(GL_FRONT_AND_BACK, static_cast<GLenum>(mode));
 }
 
 void Renderer::onResize(int width, int height)

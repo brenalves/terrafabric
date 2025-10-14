@@ -10,6 +10,7 @@
 
 #include "game/player.h"
 #include "game/quad.h"
+#include "game/world.h"
 
 class Application
 {
@@ -35,6 +36,7 @@ private:
     Timer* _timer;
     
     Player* _player;
+    World* _world;
     Quad* _quad;
 
     bool _isRunning;
