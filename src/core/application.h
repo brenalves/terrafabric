@@ -5,6 +5,8 @@
 
 #include "window.h"
 #include "renderer.h"
+#include "input.h"
+#include "timer.h"
 
 #include "game/player.h"
 #include "game/quad.h"
@@ -29,6 +31,8 @@ private:
 private:
     Window* _window;
     Renderer* _renderer;
+    Input* _input;
+    Timer* _timer;
     
     Player* _player;
     Quad* _quad;

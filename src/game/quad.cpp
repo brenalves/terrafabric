@@ -32,9 +32,11 @@ Quad::~Quad()
 
 void Quad::update()
 {
+    Timer* timer = Timer::getInstance();
+
     _transform.updateVectors();
 
-    _transform.rotation.x += 1.0f;
+    _transform.rotation.x += 10.0f * timer->getDeltaTime();
     if(_transform.rotation.x >= 360.0f)
         _transform.rotation.x -= 360.0f;
 }

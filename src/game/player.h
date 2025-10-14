@@ -2,6 +2,8 @@
 
 #include "components/camera.h"
 #include "components/transform.h"
+#include "core/input.h"
+#include "core/timer.h"
 
 class Player
 {

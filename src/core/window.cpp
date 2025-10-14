@@ -65,3 +65,27 @@ void Window::swapBuffers()
 {
     glfwSwapBuffers(_ptr);
 }
+
+void Window::setSize(int width, int height)
+{
+    _width = width;
+    _height = height;
+    glfwSetWindowSize(_ptr, width, height);
+}
+
+void Window::setTitle(const char *title)
+{
+    _title = title;
+    glfwSetWindowTitle(_ptr, title);
+}
+
+void Window::setVSync(bool enabled)
+{
+    _vsync = enabled;
+    glfwSwapInterval(enabled);
+}
+
+void Window::setFullscreen(bool enabled)
+{
+    _fullscreen = enabled;
+}

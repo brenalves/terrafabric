@@ -17,6 +17,11 @@ public:
     void pollEvents();
     void swapBuffers();
 
+    void setSize(int width, int height);
+    void setTitle(const char* title);
+    void setVSync(bool enabled);
+    void setFullscreen(bool enabled);
+
     inline GLFWwindow* getPtr() const { return _ptr; }
     inline int getWidth() const { return _width; }
     inline int getHeight() const { return _height; }

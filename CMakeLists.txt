@@ -14,6 +14,8 @@ add_executable(terrafabric
     src/core/application.h src/core/application.cpp
     src/core/renderer.h src/core/renderer.cpp
     src/core/resourcemanager.h src/core/resourcemanager.cpp
+    src/core/input.h src/core/input.cpp
+    src/core/timer.h src/core/timer.cpp
 
     src/rendering/shader.h src/rendering/shader.cpp
     src/rendering/bufferlayout.h

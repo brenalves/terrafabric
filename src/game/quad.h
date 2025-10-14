@@ -2,6 +2,7 @@
 
 #include "components/transform.h"
 #include "components/mesh.h"
+#include "core/timer.h"
 
 class Quad
 {

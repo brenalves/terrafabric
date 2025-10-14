@@ -15,8 +15,11 @@ Application::Application()
     _window = new Window(800, 600, "Terrafabric");
     _window->setOnCloseCallback(std::bind(&Application::onCloseCallback, this));
     _window->setOnResizeCallback(std::bind(&Application::onResizeCallback, this, std::placeholders::_1, std::placeholders::_2));
+    _window->setVSync(false);
 
     _renderer = new Renderer();
+    _input = new Input();
+    _timer = new Timer();
 
     _player = new Player();
     _player->getTransform().position = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -30,6 +33,9 @@ Application::~Application()
 {
     delete _quad;
     delete _player;
+
+    delete _timer;
+    delete _input;
     delete _renderer;
     delete _window;
 
@@ -41,6 +47,12 @@ void Application::run()
     while (_isRunning)
     {
         _window->pollEvents();
+
+        _input->updateStates();
+        _timer->update();
+
+        if(_input->isKeyPressed(GLFW_KEY_ESCAPE))
+            onCloseCallback();
 
         _player->update();
         _quad->update();
