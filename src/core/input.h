@@ -21,6 +21,10 @@ public:
     inline bool isKeyReleased(int key) const { return !_currentKeyStates[key] && _previousKeyStates[key]; }
     inline bool isKeyDown(int key) const { return _currentKeyStates[key]; }
     inline bool isKeyUp(int key) const { return !_currentKeyStates[key]; }
+    inline bool isMouseButtonPressed(int button) const { return _currentMouseButtonStates[button] && !_previousMouseButtonStates[button]; }
+    inline bool isMouseButtonReleased(int button) const { return !_currentMouseButtonStates[button] && _previousMouseButtonStates[button]; }
+    inline bool isMouseButtonDown(int button) const { return _currentMouseButtonStates[button]; }
+    inline bool isMouseButtonUp(int button) const { return !_currentMouseButtonStates[button]; }
 
     void setCursorMode(CursorMode mode);
 
@@ -33,6 +37,8 @@ public:
 private:
     bool _currentKeyStates[GLFW_KEY_LAST];
     bool _previousKeyStates[GLFW_KEY_LAST];
+    bool _currentMouseButtonStates[GLFW_MOUSE_BUTTON_LAST];
+    bool _previousMouseButtonStates[GLFW_MOUSE_BUTTON_LAST];
     float _mouseX;
     float _mouseY;
 

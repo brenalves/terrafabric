@@ -15,6 +15,12 @@ Input::Input()
     {
         _currentKeyStates[i] = false;
         _previousKeyStates[i] = false;
+
+        if(i < GLFW_MOUSE_BUTTON_LAST)
+        {
+            _currentMouseButtonStates[i] = false;
+            _previousMouseButtonStates[i] = false;
+        }
     }
 
     _mouseX = 400.0f;
@@ -29,6 +35,12 @@ void Input::updateStates()
     {
         _previousKeyStates[i] = _currentKeyStates[i];
         _currentKeyStates[i] = (glfwGetKey(glfwGetCurrentContext(), i) == GLFW_PRESS);
+
+        if(i < GLFW_MOUSE_BUTTON_LAST)
+        {
+            _previousMouseButtonStates[i] = _currentMouseButtonStates[i];
+            _currentMouseButtonStates[i] = (glfwGetMouseButton(glfwGetCurrentContext(), i) == GLFW_PRESS);
+        }
     }
 
     double xpos, ypos;

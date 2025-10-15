@@ -7,7 +7,7 @@ Chunk::Chunk(glm::vec3 position)
     BufferLayout layout;
     layout.push<float>(3); // position
     layout.push<float>(2); // texCoords
-    _mesh->VAO.addVertexBuffer(_mesh->VBO, layout);
+    _mesh->VAO->addVertexBuffer(*_mesh->VBO, layout);
 
     for (int x = 0; x < CHUNK_SIZE_X; x++)
     {
@@ -63,8 +63,8 @@ void Chunk::generateMesh()
         }
     }
 
-    _mesh->VBO.setData(vertices.size() * sizeof(float), vertices.data());
-    _mesh->EBO.setData(indices.size() * sizeof(unsigned int), indices.data());
+    _mesh->VBO->setData(vertices.size() * sizeof(float), vertices.data());
+    _mesh->EBO->setData(indices.size() * sizeof(unsigned int), indices.data());
 }
 
 bool Chunk::checkFaceVisibility(int x, int y, int z)

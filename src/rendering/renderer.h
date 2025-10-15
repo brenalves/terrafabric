@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <stdexcept>
 #include <GLFW/glfw3.h>
+#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include "rendering/buffer.h"
@@ -27,8 +28,9 @@ public:
     void clear();
     void beginFrame(Transform& cameraTransform, Camera& camera);
     
-    void drawQuad(Transform& transform, Mesh* mesh);
     void drawChunk(glm::vec3 position, Mesh* mesh);
+    void drawSprite(Transform& transform, Texture2D* texture);
+    void drawRay(glm::vec3 origin, glm::vec3 direction, float length, glm::vec3 color = glm::vec3(1.0f, 0.0f, 0.0f));
 
     void setDrawMode(DrawMode mode);
 

@@ -27,13 +27,18 @@ Application::Application()
 
     _world = new World();
 
-    _quad = new Quad();
-    _quad->getTransform().position = glm::vec3(0.0f, 0.0f, -3.0f);
+    _crosshair = new Crosshair();
 }
 
 Application::~Application()
 {
-    delete _quad;
+    for(Ray* ray : _rays)
+    {
+        delete ray;
+    }
+    _rays.clear();
+
+    delete _crosshair;
     delete _world;
     delete _player;
 
@@ -55,6 +60,10 @@ void Application::run()
 
         _input->updateStates();
         _timer->update();
+
+        _player->update();
+        _world->update();
+        _crosshair->update();
 
         if(_input->isKeyPressed(GLFW_KEY_ESCAPE))
             onCloseCallback();
@@ -82,21 +91,30 @@ void Application::run()
             // _window->setFullscreen(!_window->isFullscreen());
         }
 
-        _player->update();
-        _world->update();
-        _quad->update();
+        if(_input->isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
+        {
+            std::cout << "Spawn ray!" << std::endl;
+            Ray* ray = new Ray;
+            ray->origin = _player->getTransform().position;
+            ray->direction = _player->getTransform().forward;
+            ray->color = glm::vec3(1.0f, 0.0f, 0.0f);
+            _rays.push_back(ray);
+        }
 
         _renderer->clear();
 
         // render here
         _renderer->beginFrame(_player->getTransform(), _player->getCamera());
-
-        //_renderer->drawQuad(_quad->getTransform(), _quad->getMesh());
         
         Chunk* chunk = _world->getChunk();
         _renderer->drawChunk(chunk->getPosition(), chunk->getMesh());
 
-        
+        for(Ray* ray : _rays)
+        {
+            _renderer->drawRay(ray->origin, ray->direction, 10.0f, ray->color);
+        }
+
+        _renderer->drawSprite(_crosshair->getTransform(), _crosshair->getTexture());
 
         _window->swapBuffers();
     }

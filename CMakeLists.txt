@@ -12,11 +12,11 @@ add_executable(terrafabric
 
     src/core/window.h src/core/window.cpp
     src/core/application.h src/core/application.cpp
-    src/core/renderer.h src/core/renderer.cpp
     src/core/resourcemanager.h src/core/resourcemanager.cpp
     src/core/input.h src/core/input.cpp
     src/core/timer.h src/core/timer.cpp
 
+    src/rendering/renderer.h src/rendering/renderer.cpp
     src/rendering/shader.h src/rendering/shader.cpp
     src/rendering/bufferlayout.h
     src/rendering/buffer.h
@@ -28,9 +28,11 @@ add_executable(terrafabric
     src/components/mesh.h
 
     src/game/player.h src/game/player.cpp
-    src/game/quad.h src/game/quad.cpp
     src/game/world.h src/game/world.cpp
     src/game/chunk.h src/game/chunk.cpp
+    src/game/crosshair.h src/game/crosshair.cpp
+    src/game/block.h
+    src/game/ray.h
 
     external/glad/src/glad.c
     external/stb_image/src/stb_image.cpp

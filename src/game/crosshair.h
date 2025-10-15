@@ -1,21 +1,20 @@
 #pragma once
 
-#include "components/transform.h"
-#include "components/mesh.h"
-#include "core/timer.h"
+#include "core/resourcemanager.h"
 
-class Quad
+#include "components/transform.h"
+
+class Crosshair
 {
 public:
-    Quad();
-    ~Quad();
+    Crosshair();
 
     void update();
 
     inline Transform& getTransform() { return _transform; }
-    inline Mesh* getMesh() { return _mesh; }
+    inline Texture2D* getTexture() { return _texture; }
 
 private:
     Transform _transform;
-    Mesh* _mesh;
+    Texture2D* _texture;
 };

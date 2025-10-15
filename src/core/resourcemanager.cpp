@@ -2,20 +2,30 @@
 
 std::unordered_map<std::string, Shader*> ResourceManager::_shaders;
 std::unordered_map<std::string, Texture2D*> ResourceManager::_textures;
+std::unordered_map<std::string, Mesh*> ResourceManager::_meshes;
 
 void ResourceManager::shutdown()
 {
     for(auto& pair : _shaders)
     {
-        delete pair.second;
+        if(pair.second)
+            delete pair.second;
     }
     _shaders.clear();
 
     for(auto& pair : _textures)
     {
-        delete pair.second;
+        if(pair.second)
+            delete pair.second;
     }
     _textures.clear();
+
+    for(auto& pair : _meshes)
+    {
+        if(pair.second)
+            delete pair.second;
+    }
+    _meshes.clear();
 }
 
 Shader *ResourceManager::loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath)
@@ -56,6 +66,27 @@ Texture2D *ResourceManager::getTexture(const std::string &name)
     if (_textures.find(name) != _textures.end())
     {
         return _textures[name];
+    }
+    return nullptr;
+}
+
+Mesh *ResourceManager::loadMesh(const std::string &name)
+{
+    if(_meshes.find(name) != _meshes.end())
+    {
+        return _meshes[name];
+    }
+
+    Mesh* mesh = new Mesh();
+    _meshes[name] = mesh;
+    return mesh;
+}
+
+Mesh *ResourceManager::getMesh(const std::string &name)
+{
+    if( _meshes.find(name) != _meshes.end())
+    {
+        return _meshes[name];
     }
     return nullptr;
 }

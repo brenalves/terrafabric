@@ -25,6 +25,11 @@ public:
         glUniform1i(getUniformLocation(name), value);
     }
 
+    inline void setUniform3fv(const char* name, const float* value)
+    {
+        glUniform3fv(getUniformLocation(name), 1, value);
+    }
+
 private:
     unsigned int createAndCompileShader(const char* source, GLenum shaderType);
     int getUniformLocation(const char* name);

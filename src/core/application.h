@@ -4,13 +4,14 @@
 #include <iostream>
 
 #include "window.h"
-#include "renderer.h"
+#include "rendering/renderer.h"
 #include "input.h"
 #include "timer.h"
 
 #include "game/player.h"
-#include "game/quad.h"
 #include "game/world.h"
+#include "game/crosshair.h"
+#include "game/ray.h"
 
 class Application
 {
@@ -37,7 +38,9 @@ private:
     
     Player* _player;
     World* _world;
-    Quad* _quad;
+    Crosshair* _crosshair;
+
+    std::vector<Ray*> _rays;
 
     bool _isRunning;
 

@@ -15,8 +15,8 @@ public:
         : _type(type)
     {
         glGenBuffers(1, &_id);
-        glBindBuffer(type, _id);
-        glBufferData(type, size, data, GL_STATIC_DRAW);
+        glBindBuffer(_type, _id);
+        glBufferData(_type, size, data, GL_STATIC_DRAW);
     }
     ~Buffer()
     {
@@ -62,7 +62,7 @@ public:
     {
     }
     IndexBuffer(unsigned int size, const void* data)
-        : Buffer(GL_ELEMENT_ARRAY_BUFFER, size, data)
+        : Buffer(GL_ELEMENT_ARRAY_BUFFER, size, data), _count(size / sizeof(unsigned int))
     {
     }
 
