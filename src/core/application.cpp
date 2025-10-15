@@ -90,10 +90,13 @@ void Application::run()
 
         // render here
         _renderer->beginFrame(_player->getTransform(), _player->getCamera());
-        _renderer->drawQuad(_quad->getTransform(), _quad->getMesh());
+
+        //_renderer->drawQuad(_quad->getTransform(), _quad->getMesh());
         
         Chunk* chunk = _world->getChunk();
         _renderer->drawChunk(chunk->getPosition(), chunk->getMesh());
+
+        
 
         _window->swapBuffers();
     }

@@ -26,6 +26,7 @@ public:
 
     void clear();
     void beginFrame(Transform& cameraTransform, Camera& camera);
+    
     void drawQuad(Transform& transform, Mesh* mesh);
     void drawChunk(glm::vec3 position, Mesh* mesh);
 

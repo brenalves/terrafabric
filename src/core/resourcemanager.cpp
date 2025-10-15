@@ -1,7 +1,7 @@
 #include "resourcemanager.h"
 
-std::unordered_map<const char*, Shader*> ResourceManager::_shaders;
-std::unordered_map<const char*, Texture2D*> ResourceManager::_textures;
+std::unordered_map<std::string, Shader*> ResourceManager::_shaders;
+std::unordered_map<std::string, Texture2D*> ResourceManager::_textures;
 
 void ResourceManager::shutdown()
 {
@@ -18,19 +18,19 @@ void ResourceManager::shutdown()
     _textures.clear();
 }
 
-Shader *ResourceManager::loadShader(const char *name, const char *vertexPath, const char *fragmentPath)
+Shader *ResourceManager::loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath)
 {
     if(_shaders.find(name) != _shaders.end())
     {
         return _shaders[name];
     }
 
-    Shader* shader = new Shader(vertexPath, fragmentPath);
+    Shader* shader = new Shader(vertexPath.c_str(), fragmentPath.c_str());
     _shaders[name] = shader;
     return shader;
 }
 
-Shader *ResourceManager::getShader(const char *name)
+Shader *ResourceManager::getShader(const std::string &name)
 {
     if (_shaders.find(name) != _shaders.end())
     {
@@ -39,7 +39,7 @@ Shader *ResourceManager::getShader(const char *name)
     return nullptr;
 }
 
-Texture2D *ResourceManager::loadTexture(const char *name)
+Texture2D *ResourceManager::loadTexture(const std::string &name)
 {
     if(_textures.find(name) != _textures.end())
     {
@@ -51,7 +51,7 @@ Texture2D *ResourceManager::loadTexture(const char *name)
     return texture;
 }
 
-Texture2D *ResourceManager::getTexture(const char *name)
+Texture2D *ResourceManager::getTexture(const std::string &name)
 {
     if (_textures.find(name) != _textures.end())
     {

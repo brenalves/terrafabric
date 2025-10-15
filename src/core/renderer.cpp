@@ -20,14 +20,14 @@ Renderer::Renderer()
 
     _uniformBuffer = new UniformBuffer(2 * sizeof(glm::mat4), 0);
 
-    ResourceManager::loadShader("quad", "assets/shaders/quad.vert", "assets/shaders/quad.frag");
-    ResourceManager::loadShader("chunk", "assets/shaders/chunk.vert", "assets/shaders/chunk.frag");
+    ResourceManager::loadShader("quad", "./assets/shaders/quad.vert", "./assets/shaders/quad.frag");
+    ResourceManager::loadShader("chunk", "./assets/shaders/chunk.vert", "./assets/shaders/chunk.frag");
 
     Texture2D* atlas = ResourceManager::loadTexture("atlas");
-    atlas->loadFromFile("assets/textures/atlas.png");
+    atlas->loadFromFile("./assets/textures/atlas.png");
 
     Texture2D* crosshair = ResourceManager::loadTexture("crosshair");
-    crosshair->loadFromFile("assets/textures/crosshair.png");
+    crosshair->loadFromFile("./assets/textures/crosshair.png");
 
     _drawMode = DrawMode::FILL;
 
