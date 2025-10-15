@@ -1,5 +1,8 @@
 #include "player.h"
 
+#include <iostream>
+#include "raycast.h"
+
 Player::Player()
 {
     _speed = 15.0f;
@@ -15,6 +18,7 @@ void Player::update()
     _transform.updateVectors();
 
     glm::vec3 movementDirection(0.0f);
+    float movementSpeed = _speed;
 
     if (input->isKeyDown(GLFW_KEY_W))
         movementDirection += _transform.forward;
@@ -36,7 +40,21 @@ void Player::update()
     if (glm::length(movementDirection) != 0.0f)
         movementDirection = glm::normalize(movementDirection);
 
-    _transform.position += movementDirection * _speed * timer->getDeltaTime();
+    if(input->isKeyDown(GLFW_KEY_LEFT_ALT))
+        movementSpeed /= 2.0f;
+    if(input->isKeyDown(GLFW_KEY_LEFT_CONTROL))
+        movementSpeed *= 2.0f;
+
+    _transform.position += movementDirection * movementSpeed * timer->getDeltaTime();
+
+    if (input->isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+    {
+        RaycastHit hitInfo;
+        if (Raycast::intersectRayWithBlocks(_transform.position, _transform.forward, 5.0f, &hitInfo))
+        {
+            std::cout << "Hit block at " << hitInfo.position.x << ", " << hitInfo.position.y << ", " << hitInfo.position.z << " of type " << static_cast<int>(hitInfo.blockType) << std::endl;
+        }
+    }
 
     if (input->getCursorMode() == DISABLED)
     {

@@ -7,8 +7,8 @@ struct Camera
 {
     float fov = 60.0f;
     float aspectRatio = 4.0f / 3.0f;
-    float nearPlane = 0.1f;
-    float farPlane = 100.0f;
+    float nearPlane = 0.01f;
+    float farPlane = 1000.0f;
 
     glm::mat4 getProjectionMatrix() const
     {

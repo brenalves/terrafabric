@@ -26,6 +26,7 @@ Application::Application()
     _player->getTransform().rotation = glm::vec3(0.0f, -90.0f, 0.0f);
 
     _world = new World();
+    _world->generateInitialChunks();
 
     _crosshair = new Crosshair();
 }
@@ -93,11 +94,18 @@ void Application::run()
 
         if(_input->isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
         {
-            std::cout << "Spawn ray!" << std::endl;
             Ray* ray = new Ray;
             ray->origin = _player->getTransform().position;
             ray->direction = _player->getTransform().forward;
             ray->color = glm::vec3(1.0f, 0.0f, 0.0f);
+            _rays.push_back(ray);
+        }
+        if(_input->isMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
+        {
+            Ray* ray = new Ray;
+            ray->origin = _player->getTransform().position;
+            ray->direction = _player->getTransform().forward;
+            ray->color = glm::vec3(0.0f, 1.0f, 0.0f);
             _rays.push_back(ray);
         }
 
@@ -105,9 +113,12 @@ void Application::run()
 
         // render here
         _renderer->beginFrame(_player->getTransform(), _player->getCamera());
-        
-        Chunk* chunk = _world->getChunk();
-        _renderer->drawChunk(chunk->getPosition(), chunk->getMesh());
+
+        auto chunks = _world->getChunks();
+        for (auto chunk : chunks)
+        {
+            _renderer->drawChunk(chunk.first, chunk.second->getMesh());
+        }
 
         for(Ray* ray : _rays)
         {

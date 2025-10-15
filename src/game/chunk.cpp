@@ -67,6 +67,17 @@ void Chunk::generateMesh()
     _mesh->EBO->setData(indices.size() * sizeof(unsigned int), indices.data());
 }
 
+Block& Chunk::getBlockAt(int x, int y, int z)
+{
+    if (x < 0 || x >= CHUNK_SIZE_X ||
+        y < 0 || y >= CHUNK_SIZE_Y ||
+        z < 0 || z >= CHUNK_SIZE_Z)
+    {
+        throw std::out_of_range("Block coordinates out of range");
+    }
+    return _blocks[x][y][z];
+}
+
 bool Chunk::checkFaceVisibility(int x, int y, int z)
 {
     return checkFaceVisibilityLocal(x, y, z) && checkFaceVisibilityGlobal(x, y, z);

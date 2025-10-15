@@ -131,9 +131,20 @@ void Renderer::drawRay(glm::vec3 origin, glm::vec3 direction, float length, glm:
 
     shader->bind();
 
-    // Calculte the model matrix
+    // Calculate the model matrix
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, origin);
 
-    // shader->setUniformMatrix4fv("u_Model", glm::value_ptr(model));
+    // Align the ray with the direction
+    // I need to understand this better
+    glm::vec3 dirNorm = glm::normalize(direction);
+    float angle = acos(glm::dot(dirNorm, glm::vec3(0.0f, 0.0f, 1.0f)));
+    glm::vec3 axis = glm::cross(glm::vec3(0.0f, 0.0f, 1.0f), dirNorm);
+    if(glm::length(axis) > 0.0001f) // Avoid NaN
+        model = glm::rotate(model, angle, glm::normalize(axis));
+    model = glm::scale(model, glm::vec3(1.0f, 1.0f, length));
+
+    shader->setUniformMatrix4fv("u_Model", glm::value_ptr(model));
     shader->setUniform3fv("u_Color", glm::value_ptr(color));
 
     Mesh* rayMesh = ResourceManager::getMesh("ray");

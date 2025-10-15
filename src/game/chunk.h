@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <stdexcept>
 
 #include "components/mesh.h"
 #include "block.h"
@@ -17,6 +18,8 @@ public:
     ~Chunk();
 
     void generateMesh();
+
+    Block& getBlockAt(int x, int y, int z);
 
     inline glm::vec3 getPosition() const { return _position; }
     inline Mesh* getMesh() const { return _mesh; }

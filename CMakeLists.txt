@@ -33,9 +33,14 @@ add_executable(terrafabric
     src/game/crosshair.h src/game/crosshair.cpp
     src/game/block.h
     src/game/ray.h
+    src/game/raycast.h src/game/raycast.cpp
 
     external/glad/src/glad.c
     external/stb_image/src/stb_image.cpp
+)
+
+target_compile_definitions(terrafabric PRIVATE
+    GLFW_INCLUDE_NONE
 )
 
 target_link_libraries(terrafabric PRIVATE
